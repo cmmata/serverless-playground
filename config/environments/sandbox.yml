@@ -1,0 +1,4 @@
+stage: "sandbox"
+
+newrelic:
+  disableAutoSubscription: true

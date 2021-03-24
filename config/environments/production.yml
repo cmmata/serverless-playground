@@ -1,0 +1,4 @@
+stage: "production"
+
+newrelic:
+  accountId: XXX

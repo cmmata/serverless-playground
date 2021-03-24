@@ -1,0 +1,80 @@
+Resources:
+  ApiGatewayRestApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: ${self:service.name}
+  GatewayResponseDefault4XX:
+    Type: AWS::ApiGateway::GatewayResponse
+    Properties:
+      RestApiId:
+        Ref: ApiGatewayRestApi
+      ResponseType: DEFAULT_4XX
+      ResponseTemplates:
+        application/json: >
+          {
+            "type": "$context.error.responseType",
+            "message": "$context.error.message"
+          }
+  GatewayResponseInvalidRequestBody:
+    Type: AWS::ApiGateway::GatewayResponse
+    Properties:
+      RestApiId:
+        Ref: ApiGatewayRestApi
+      ResponseType: BAD_REQUEST_BODY
+      ResponseTemplates:
+        application/json: >
+          {
+            "type": "$context.error.responseType",
+            "message": "$context.error.message",
+            "details": "$context.error.validationErrorString"
+          }
+  GatewayResponseMissingAuthenticationToken:
+    Type: AWS::ApiGateway::GatewayResponse
+    Properties:
+      RestApiId:
+        Ref: ApiGatewayRestApi
+      ResponseType: MISSING_AUTHENTICATION_TOKEN
+      ResponseTemplates:
+        application/json: >
+          {
+            "type": "$context.error.responseType",
+            "message": "$context.error.message"
+          }
+      StatusCode: 401
+  GatewayResponseInvalidApiKey:
+    Type: AWS::ApiGateway::GatewayResponse
+    Properties:
+      RestApiId:
+        Ref: ApiGatewayRestApi
+      ResponseType: INVALID_API_KEY
+      ResponseTemplates:
+        application/json: >
+          {
+            "type": "$context.error.responseType",
+            "message": "$context.error.message"
+          }
+      StatusCode: 401
+  GatewayResponseUnauthorized:
+    Type: AWS::ApiGateway::GatewayResponse
+    Properties:
+      RestApiId:
+        Ref: ApiGatewayRestApi
+      ResponseType: UNAUTHORIZED
+      ResponseTemplates:
+        application/json: >
+          {
+            "type": "$context.error.responseType",
+            "message": "$context.error.message"
+          }
+  GatewayResponseDefault5XX:
+    Type: AWS::ApiGateway::GatewayResponse
+    Properties:
+      RestApiId:
+        Ref: ApiGatewayRestApi
+      ResponseType: DEFAULT_5XX
+      ResponseTemplates:
+        application/json: >
+          {
+            "type": "$context.error.responseType",
+            "message": "$context.error.message"
+          }

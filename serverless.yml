@@ -1,0 +1,27 @@
+service:
+  name: aws-nodejs-typescript
+
+package:
+  individually: true
+
+custom:
+  ${file(config/custom.yml)}
+
+plugins:
+  - serverless-pseudo-parameters
+  - serverless-webpack
+  - serverless-newrelic-lambda-layers
+  
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: eu-west-1
+  stage: ${opt:stage, 'sandbox'}
+  iamRoleStatements:
+    ${file(config/role-statements/common.yml)}
+
+functions:
+  - ${file(config/functions/hello.yml)}
+
+resources:
+  - ${file(config/resources/api-gateway.yml)}
